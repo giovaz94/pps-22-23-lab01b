@@ -13,4 +13,8 @@ public interface WorldConfig {
     Actor getPawn();
 
     Actor getKnight();
+
+    boolean hasPawn(int row, int col);
+
+    boolean hasKnight(int row, int col);
 }

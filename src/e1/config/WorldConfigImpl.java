@@ -40,6 +40,22 @@ public class WorldConfigImpl implements WorldConfig {
         this.knight = new KnightActorImpl(knightPosition.getX(), knightPosition.getY());
     }
 
+    public WorldConfigImpl(int size, SpawnStrategy spawnStrategy) {
+        this.size = size;
+        this.spawnStrategy = spawnStrategy;
+
+        final Pair<Integer, Integer> pawnPosition = this.spawnStrategy.spawnElement();
+        this.pawn = new PawnActorImpl(pawnPosition.getX(), pawnPosition.getY());
+        final Pair<Integer, Integer> knightPosition = this.spawnStrategy.spawnElement();
+        this.knight = new KnightActorImpl(knightPosition.getX(), knightPosition.getY());
+    }
+
+    public WorldConfigImpl(int size, Pair<Integer, Integer> pawnPosition, Pair<Integer, Integer> knightPosition ) {
+        this.size = size;
+        this.pawn = new PawnActorImpl(pawnPosition.getX(), pawnPosition.getY());
+        this.knight = new KnightActorImpl(knightPosition.getX(), knightPosition.getY());
+    }
+
     @Override
     public int getSize() {
         return this.size;
@@ -60,5 +76,15 @@ public class WorldConfigImpl implements WorldConfig {
     @Override
     public Actor getKnight() {
         return this.knight;
+    }
+
+    @Override
+    public boolean hasPawn(int row, int col) {
+        return this.getPawn().getPosition().equals(new Pair<>(row,col));
+    }
+
+    @Override
+    public boolean hasKnight(int row, int col) {
+        return this.getKnight().getPosition().equals(new Pair<>(row,col));
     }
 }

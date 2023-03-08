@@ -29,6 +29,18 @@ class WorldConfigTest {
         assertNotNull(this.worldConfig.getKnight());
     }
 
+    @Test
+    public void testHasPawn() {
+        final Pair<Integer, Integer> pawnPosition = this.worldConfig.getPawn().getPosition();
+        assertTrue(this.worldConfig.hasPawn(pawnPosition.getX(), pawnPosition.getY()));
+    }
+
+    @Test
+    public void testHasKnight() {
+        final Pair<Integer, Integer> knightPosition= this.worldConfig.getKnight().getPosition();
+        assertTrue(this.worldConfig.hasKnight(knightPosition.getX(), knightPosition.getY()));
+    }
+
     @RepeatedTest(20)
     public void testPositionCollision() {
         assertNotEquals(this.worldConfig.getPawn().getPosition(), this.worldConfig.getKnight().getPosition());
@@ -46,4 +58,6 @@ class WorldConfigTest {
         assertFalse(this.worldConfig.isIn(outOfBoundPosition));
         assertTrue(this.worldConfig.isIn(insideGridPosition));
     }
+
+
 }
