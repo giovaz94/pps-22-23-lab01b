@@ -12,35 +12,30 @@ import java.util.Random;
 public class WorldConfigImpl implements WorldConfig {
 
     public static final int SIZE_LIMIT = 1;
-    private final int size;
+    private int size;
 
-    private final Actor pawn;
+    private Actor pawn;
 
-    private final Actor knight;
+    private Actor knight;
 
     private SpawnStrategy spawnStrategy;
 
     public WorldConfigImpl(int size, Pair<Integer, Integer> pawnPosition, Pair<Integer, Integer> knightPosition ) {
-        this.checkSize(size);
-        this.size = size;
-        this.pawn = new PawnActorImpl(pawnPosition.getX(), pawnPosition.getY());
-        this.knight = new KnightActorImpl(knightPosition.getX(), knightPosition.getY());
+        this.setSize(size);
+        this.setPawn(pawnPosition);
+        this.setKnight(knightPosition);
     }
 
     public WorldConfigImpl(int size, SpawnStrategy spawnStrategy) {
-        this.checkSize(size);
-        this.size = size;
+        this.setSize(size);
         this.spawnStrategy = spawnStrategy;
-        final Pair<Integer, Integer> pawnPosition = this.spawnStrategy.spawnElement();
-        this.pawn = new PawnActorImpl(pawnPosition.getX(), pawnPosition.getY());
-        final Pair<Integer, Integer> knightPosition = this.spawnStrategy.spawnElement();
-        this.knight = new KnightActorImpl(knightPosition.getX(), knightPosition.getY());
+        this.setPawn(this.spawnStrategy.spawnElement());
+        this.setKnight(this.spawnStrategy.spawnElement());
     }
 
 
     public WorldConfigImpl(final int size) {
-        this.checkSize(size);
-        this.size = size;
+        this.setSize(size);
         this.spawnStrategy = () -> {
             final Random random = new Random();
             Pair<Integer,Integer> pos = new Pair<>(random.nextInt(this.size),random.nextInt(this.size));
@@ -49,21 +44,31 @@ public class WorldConfigImpl implements WorldConfig {
             }
             return pos;
         };
-
-        final Pair<Integer, Integer> pawnPosition = this.spawnStrategy.spawnElement();
-        this.pawn = new PawnActorImpl(pawnPosition.getX(), pawnPosition.getY());
-
-        final Pair<Integer, Integer> knightPosition = this.spawnStrategy.spawnElement();
-        this.knight = new KnightActorImpl(knightPosition.getX(), knightPosition.getY());
+        this.setPawn(this.spawnStrategy.spawnElement());
+        this.setKnight(this.spawnStrategy.spawnElement());
     }
 
 
-    private void checkSize(int size) {
+    private void setSize(int size) {
         if(size <= SIZE_LIMIT) {
             throw new IllegalArgumentException();
         }
+        this.size = size;
     }
 
+    private void setPawn(Pair<Integer, Integer> pawnPosition) {
+        if(!this.isIn(pawnPosition)) {
+            throw new IllegalArgumentException();
+        }
+        this.pawn = new PawnActorImpl(pawnPosition.getX(), pawnPosition.getY());
+    }
+
+    private void setKnight(Pair<Integer, Integer> knightPosition) {
+        if(!this.isIn(knightPosition)) {
+            throw new IllegalArgumentException();
+        }
+        this.knight = new KnightActorImpl(knightPosition.getX(), knightPosition.getY());
+    }
     @Override
     public int getSize() {
         return this.size;
