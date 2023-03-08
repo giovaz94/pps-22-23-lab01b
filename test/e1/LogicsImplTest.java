@@ -1,13 +1,13 @@
 package e1;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import java.util.function.Predicate;
 
 import static org.junit.jupiter.api.Assertions.*;
 class LogicsImplTest {
-
 
     public static final int GAME_GRID_SIZE = 5;
     private Logics gameLogic;
@@ -19,14 +19,20 @@ class LogicsImplTest {
 
     @Test
     public void testInitialCondition() {
-        assertTrue(checkInBoard(p -> this.gameLogic.hasPawn(p.getX(), p.getY())));
-        assertTrue(checkInBoard(p -> this.gameLogic.hasKnight(p.getX(), p.getY())));
+        assertNotNull(this.gameLogic.getPawn());
+        assertNotNull(this.gameLogic.getKnight());
     }
 
     @Test
     public void testInvalidMove() {
         final Pair<Integer,Integer> position = new Pair<>(GAME_GRID_SIZE, GAME_GRID_SIZE);
         assertThrowsExactly(IndexOutOfBoundsException.class, () -> this.gameLogic.hit(position.getX(), position.getY()));
+    }
+
+    @RepeatedTest(20)
+    public void testRandomlyGeneratedPositionAreInGrid() {
+        assertTrue(this.isInGrid(this.gameLogic.getKnight().getX(), this.gameLogic.getKnight().getY()));
+        assertTrue(this.isInGrid(this.gameLogic.getPawn().getX(), this.gameLogic.getPawn().getY()));
     }
 
     @Test
@@ -39,21 +45,11 @@ class LogicsImplTest {
         assertFalse(this.gameLogic.hit(emptyPosition.getX(), emptyPosition.getY()));
     }
 
-
-
-
-    private boolean checkInBoard(final Predicate<Pair<Integer, Integer>> predicate) {
-        for (int i = 0; i < GAME_GRID_SIZE; i++) {
-            for (int j = 0; j < GAME_GRID_SIZE; j++) {
-                if( predicate.test(new Pair<>(i, j))) {
-                    return true;
-                }
-            }
-        }
-        return  false;
-    }
-
     private Pair<Integer, Integer> generatePosition(int x, int y) {
         return new Pair<>(x,y);
+    }
+
+    private boolean isInGrid(int x, int y) {
+        return !(x<0 || y<0 || x >= GAME_GRID_SIZE || y >= GAME_GRID_SIZE);
     }
 }

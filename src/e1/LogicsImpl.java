@@ -20,8 +20,6 @@ public class LogicsImpl implements Logics {
 		this.pawn = pawn;
 		this.knight = knight;
 	}
-
-
     
 	private final Pair<Integer,Integer> randomEmptyPosition(){
     	Pair<Integer,Integer> pos = new Pair<>(this.random.nextInt(size),this.random.nextInt(size));
@@ -52,5 +50,15 @@ public class LogicsImpl implements Logics {
 	@Override
 	public boolean hasPawn(int row, int col) {
 		return this.pawn.equals(new Pair<>(row,col));
+	}
+
+	@Override
+	public Pair<Integer, Integer> getPawn() {
+		return new Pair<>(this.pawn.getX(), this.pawn.getY());
+	}
+
+	@Override
+	public Pair<Integer, Integer> getKnight() {
+		return new Pair<>(this.knight.getX(), this.knight.getY());
 	}
 }
