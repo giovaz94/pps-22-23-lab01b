@@ -20,6 +20,8 @@ public class LogicsImpl implements Logics {
 		this.pawn = pawn;
 		this.knight = knight;
 	}
+
+
     
 	private final Pair<Integer,Integer> randomEmptyPosition(){
     	Pair<Integer,Integer> pos = new Pair<>(this.random.nextInt(size),this.random.nextInt(size));
