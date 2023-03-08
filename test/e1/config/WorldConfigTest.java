@@ -1,17 +1,14 @@
 package e1.config;
 
 import e1.Pair;
-import e1.config.spawn.SpawnStrategy;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
-import java.security.InvalidParameterException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class WorldConfigTest {
-
-
     public static final int WORLD_SIZE = 5;
     public static final int INVALID_WORLD_SIZE = 1;
     private WorldConfig worldConfig;
@@ -24,6 +21,17 @@ class WorldConfigTest {
     @Test
     public void testInvalidWorldSize() {
         assertThrows(IllegalArgumentException.class, () -> new WorldConfigImpl(INVALID_WORLD_SIZE));
+    }
+
+    @Test
+    public void testGetActors() {
+        assertNotNull(this.worldConfig.getPawn());
+        assertNotNull(this.worldConfig.getKnight());
+    }
+
+    @RepeatedTest(20)
+    public void testPositionCollision() {
+        assertNotEquals(this.worldConfig.getPawn().getPosition(), this.worldConfig.getKnight().getPosition());
     }
 
     @Test
