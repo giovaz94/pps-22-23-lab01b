@@ -1,5 +1,8 @@
 package e1;
 
+import e1.config.WorldConfig;
+import e1.config.WorldConfigImpl;
+
 import java.util.*;
 
 public class LogicsImpl implements Logics {
@@ -8,17 +11,20 @@ public class LogicsImpl implements Logics {
 	private Pair<Integer,Integer> knight;
 	private final Random random = new Random();
 	private final int size;
-	 
+	private final WorldConfig worldConfig;
+
     public LogicsImpl(int size){
     	this.size = size;
         this.pawn = this.randomEmptyPosition();
-        this.knight = this.randomEmptyPosition();	
+        this.knight = this.randomEmptyPosition();
+		this.worldConfig = new WorldConfigImpl(size);
     }
 
 	public LogicsImpl(int size, Pair<Integer,Integer> pawn, Pair<Integer, Integer> knight) {
 		this.size = size;
 		this.pawn = pawn;
 		this.knight = knight;
+		this.worldConfig = new WorldConfigImpl(size);
 	}
     
 	private final Pair<Integer,Integer> randomEmptyPosition(){
@@ -29,7 +35,7 @@ public class LogicsImpl implements Logics {
     
 	@Override
 	public boolean hit(int row, int col) {
-		if (row<0 || col<0 || row >= this.size || col >= this.size) {
+		if (!this.worldConfig.isIn(new Pair<>(row, col))) {
 			throw new IndexOutOfBoundsException();
 		}
 		// Below a compact way to express allowed moves for the knight
