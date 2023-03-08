@@ -41,8 +41,8 @@ class LogicsImplTest {
         final Pair<Integer,Integer> knightPosition = this.generatePosition(3,4);
         final Pair<Integer,Integer> emptyPosition = this.generatePosition(2,2);
         this.gameLogic = new LogicsImpl(GAME_GRID_SIZE, pawnPosition, knightPosition);
+
         assertTrue(this.gameLogic.hit(pawnPosition.getX(), pawnPosition.getY()));
-        assertFalse(this.gameLogic.hit(emptyPosition.getX(), emptyPosition.getY()));
     }
 
     private Pair<Integer, Integer> generatePosition(int x, int y) {

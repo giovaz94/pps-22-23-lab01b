@@ -1,5 +1,8 @@
 package e1;
 
+import e1.actor.Actor;
+import e1.actor.KnightActorImpl;
+import e1.actor.PawnActorImpl;
 import e1.config.WorldConfig;
 import e1.config.WorldConfigImpl;
 
@@ -7,30 +10,34 @@ import java.util.*;
 
 public class LogicsImpl implements Logics {
 	
-	private final Pair<Integer,Integer> pawn;
-	private Pair<Integer,Integer> knight;
+	private final Actor pawn;
+	private Actor knight;
 	private final Random random = new Random();
 	private final int size;
 	private final WorldConfig worldConfig;
 
     public LogicsImpl(int size){
     	this.size = size;
-        this.pawn = this.randomEmptyPosition();
-        this.knight = this.randomEmptyPosition();
 		this.worldConfig = new WorldConfigImpl(size);
+		final Pair<Integer, Integer> pawnPosition = this.randomEmptyPosition();
+		final Pair<Integer, Integer> knightPosition = this.randomEmptyPosition();
+
+        this.pawn = new PawnActorImpl(pawnPosition.getX(), pawnPosition.getY(), this.worldConfig);
+        this.knight = new KnightActorImpl(knightPosition.getX(), knightPosition.getY(), this.worldConfig);
     }
 
-	public LogicsImpl(int size, Pair<Integer,Integer> pawn, Pair<Integer, Integer> knight) {
+	public LogicsImpl(int size, Pair<Integer, Integer> pawnPosition, Pair<Integer, Integer> knightPosition) {
 		this.size = size;
-		this.pawn = pawn;
-		this.knight = knight;
 		this.worldConfig = new WorldConfigImpl(size);
+		this.pawn = new PawnActorImpl(pawnPosition.getX(), pawnPosition.getY(), this.worldConfig);
+		this.knight = new KnightActorImpl(knightPosition.getX(), knightPosition.getY(), this.worldConfig);
+
 	}
     
 	private final Pair<Integer,Integer> randomEmptyPosition(){
     	Pair<Integer,Integer> pos = new Pair<>(this.random.nextInt(size),this.random.nextInt(size));
     	// the recursive call below prevents clash with an existing pawn
-    	return this.pawn!=null && this.pawn.equals(pos) ? randomEmptyPosition() : pos;
+    	return this.pawn!=null && this.pawn.getPosition().equals(pos) ? randomEmptyPosition() : pos;
     }
     
 	@Override
@@ -38,33 +45,28 @@ public class LogicsImpl implements Logics {
 		if (!this.worldConfig.isIn(new Pair<>(row, col))) {
 			throw new IndexOutOfBoundsException();
 		}
-		// Below a compact way to express allowed moves for the knight
-		int x = row-this.knight.getX();
-		int y = col-this.knight.getY();
-		if (x!=0 && y!=0 && Math.abs(x)+Math.abs(y)==3) {
-			this.knight = new Pair<>(row,col);
-			return this.pawn.equals(this.knight);
-		}
-		return false;
+
+		this.knight.move(new Pair<>(row, col));
+		return this.pawn.getPosition().equals(this.knight.getPosition());
 	}
 
 	@Override
 	public boolean hasKnight(int row, int col) {
-		return this.knight.equals(new Pair<>(row,col));
+		return this.knight.getPosition().equals(new Pair<>(row,col));
 	}
 
 	@Override
 	public boolean hasPawn(int row, int col) {
-		return this.pawn.equals(new Pair<>(row,col));
+		return this.pawn.getPosition().equals(new Pair<>(row,col));
 	}
 
 	@Override
 	public Pair<Integer, Integer> getPawn() {
-		return new Pair<>(this.pawn.getX(), this.pawn.getY());
+		return this.pawn.getPosition();
 	}
 
 	@Override
 	public Pair<Integer, Integer> getKnight() {
-		return new Pair<>(this.knight.getX(), this.knight.getY());
+		return this.knight.getPosition();
 	}
 }

@@ -9,9 +9,9 @@ public interface Actor {
 
     MovementStrategy getMovementStrategy();
 
-    default void move(Pair<Integer, Integer> x) {
-        if (this.getMovementStrategy().canMoveToPosition(x, this.getPosition())) {
-            this.setPosition(x);
+    default void move(Pair<Integer, Integer> newPosition) {
+        if (this.getMovementStrategy().canMoveToPosition(this.getPosition(), newPosition)) {
+            this.setPosition(newPosition);
         }
     }
 }
