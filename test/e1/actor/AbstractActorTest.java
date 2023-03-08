@@ -8,8 +8,6 @@ abstract class AbstractActorTest {
 
     abstract public Actor getActor();
 
-    abstract public WorldConfig getWorldConfig();
-
     @Test
     public void testInitialState() {
         assertNotNull(this.getActor().getMovementStrategy());

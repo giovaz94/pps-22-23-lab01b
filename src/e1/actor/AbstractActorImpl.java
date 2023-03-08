@@ -11,13 +11,10 @@ public class AbstractActorImpl implements Actor {
 
     private final MovementStrategy strategy;
 
-    private final WorldConfig currentWorld;
 
-
-    public AbstractActorImpl(int x, int y, MovementStrategy movementStrategy, WorldConfig worldConfig) {
+    public AbstractActorImpl(int x, int y, MovementStrategy movementStrategy) {
         this.strategy = movementStrategy;
         this.position = new Pair<>(x,y);
-        this.currentWorld = worldConfig;
     }
 
     @Override
@@ -27,9 +24,6 @@ public class AbstractActorImpl implements Actor {
 
     @Override
     public void setPosition(Pair<Integer, Integer> newPosition) {
-        if(!this.currentWorld.isIn(newPosition)) {
-            throw new IllegalArgumentException();
-        }
         this.position = newPosition;
     }
 

@@ -13,12 +13,10 @@ class KnightActorImplTest extends AbstractActorTest {
 
     public static final int WORLD_SIZE = 5;
     private Actor actor;
-    private WorldConfig worldConfig;
 
     @BeforeEach
     public void setup() {
-        this.worldConfig = new WorldConfigImpl(WORLD_SIZE);
-        this.actor = new KnightActorImpl(WORLD_SIZE / 2 , WORLD_SIZE / 2, this.worldConfig);
+        this.actor = new KnightActorImpl(WORLD_SIZE / 2 , WORLD_SIZE / 2);
     }
 
     @Test
@@ -33,10 +31,5 @@ class KnightActorImplTest extends AbstractActorTest {
     @Override
     public Actor getActor() {
         return this.actor;
-    }
-
-    @Override
-    public WorldConfig getWorldConfig() {
-        return this.worldConfig;
     }
 }

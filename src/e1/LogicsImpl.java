@@ -22,15 +22,15 @@ public class LogicsImpl implements Logics {
 		final Pair<Integer, Integer> pawnPosition = this.randomEmptyPosition();
 		final Pair<Integer, Integer> knightPosition = this.randomEmptyPosition();
 
-        this.pawn = new PawnActorImpl(pawnPosition.getX(), pawnPosition.getY(), this.worldConfig);
-        this.knight = new KnightActorImpl(knightPosition.getX(), knightPosition.getY(), this.worldConfig);
+        this.pawn = new PawnActorImpl(pawnPosition.getX(), pawnPosition.getY());
+        this.knight = new KnightActorImpl(knightPosition.getX(), knightPosition.getY());
     }
 
 	public LogicsImpl(int size, Pair<Integer, Integer> pawnPosition, Pair<Integer, Integer> knightPosition) {
 		this.size = size;
 		this.worldConfig = new WorldConfigImpl(size);
-		this.pawn = new PawnActorImpl(pawnPosition.getX(), pawnPosition.getY(), this.worldConfig);
-		this.knight = new KnightActorImpl(knightPosition.getX(), knightPosition.getY(), this.worldConfig);
+		this.pawn = new PawnActorImpl(pawnPosition.getX(), pawnPosition.getY());
+		this.knight = new KnightActorImpl(knightPosition.getX(), knightPosition.getY());
 
 	}
     
