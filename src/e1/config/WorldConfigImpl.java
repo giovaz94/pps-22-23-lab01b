@@ -11,6 +11,7 @@ import java.util.Random;
 
 public class WorldConfigImpl implements WorldConfig {
 
+    public static final int SIZE_LIMIT = 1;
     private final int size;
 
     private final Actor pawn;
@@ -19,10 +20,26 @@ public class WorldConfigImpl implements WorldConfig {
 
     private SpawnStrategy spawnStrategy;
 
+    public WorldConfigImpl(int size, Pair<Integer, Integer> pawnPosition, Pair<Integer, Integer> knightPosition ) {
+        this.checkSize(size);
+        this.size = size;
+        this.pawn = new PawnActorImpl(pawnPosition.getX(), pawnPosition.getY());
+        this.knight = new KnightActorImpl(knightPosition.getX(), knightPosition.getY());
+    }
+
+    public WorldConfigImpl(int size, SpawnStrategy spawnStrategy) {
+        this.checkSize(size);
+        this.size = size;
+        this.spawnStrategy = spawnStrategy;
+        final Pair<Integer, Integer> pawnPosition = this.spawnStrategy.spawnElement();
+        this.pawn = new PawnActorImpl(pawnPosition.getX(), pawnPosition.getY());
+        final Pair<Integer, Integer> knightPosition = this.spawnStrategy.spawnElement();
+        this.knight = new KnightActorImpl(knightPosition.getX(), knightPosition.getY());
+    }
+
+
     public WorldConfigImpl(final int size) {
-        if(size <= 1) {
-            throw new IllegalArgumentException();
-        }
+        this.checkSize(size);
         this.size = size;
         this.spawnStrategy = () -> {
             final Random random = new Random();
@@ -40,20 +57,11 @@ public class WorldConfigImpl implements WorldConfig {
         this.knight = new KnightActorImpl(knightPosition.getX(), knightPosition.getY());
     }
 
-    public WorldConfigImpl(int size, SpawnStrategy spawnStrategy) {
-        this.size = size;
-        this.spawnStrategy = spawnStrategy;
 
-        final Pair<Integer, Integer> pawnPosition = this.spawnStrategy.spawnElement();
-        this.pawn = new PawnActorImpl(pawnPosition.getX(), pawnPosition.getY());
-        final Pair<Integer, Integer> knightPosition = this.spawnStrategy.spawnElement();
-        this.knight = new KnightActorImpl(knightPosition.getX(), knightPosition.getY());
-    }
-
-    public WorldConfigImpl(int size, Pair<Integer, Integer> pawnPosition, Pair<Integer, Integer> knightPosition ) {
-        this.size = size;
-        this.pawn = new PawnActorImpl(pawnPosition.getX(), pawnPosition.getY());
-        this.knight = new KnightActorImpl(knightPosition.getX(), knightPosition.getY());
+    private void checkSize(int size) {
+        if(size <= SIZE_LIMIT) {
+            throw new IllegalArgumentException();
+        }
     }
 
     @Override
