@@ -1,6 +1,7 @@
 package e1.config;
 
 import e1.Pair;
+import e1.config.spawn.SpawnStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,7 @@
 package e1.config;
 
 import e1.Pair;
+import e1.actor.Actor;
 
 public class WorldConfigImpl implements WorldConfig {
 
