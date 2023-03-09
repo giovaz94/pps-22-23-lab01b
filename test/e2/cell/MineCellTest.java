@@ -15,7 +15,7 @@ class MineCellTest extends AbstractCellTest{
 
     @BeforeEach
     public void setup() {
-        this.cell = new MineCell(DEFAULT_CELL_POSITION);
+        this.cell = new MineCellImpl(DEFAULT_CELL_POSITION);
     }
 
     @Test

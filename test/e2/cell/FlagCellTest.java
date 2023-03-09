@@ -15,7 +15,7 @@ class FlagCellTest extends AbstractCellTest{
 
     @BeforeEach
     public void setup() {
-        this.cell = new FlagCell(DEFAULT_CELL_POSITION);
+        this.cell = new FlagCellImpl(DEFAULT_CELL_POSITION);
     }
 
     @Test

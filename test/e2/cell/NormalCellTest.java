@@ -5,6 +5,9 @@ import e2.cell.type.CellType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class NormalCellTest extends AbstractCellTest{
@@ -15,12 +18,20 @@ class NormalCellTest extends AbstractCellTest{
 
     @BeforeEach
     public void setup() {
-        this.cell = new NormalCell(DEFAULT_CELL_POSITION);
+        this.cell = new NormalCellImpl(DEFAULT_CELL_POSITION);
     }
 
     @Test
     public void testType() {
         assertEquals(this.getCell().getType(), CellType.NORMAL_CELL_TYPE);
+    }
+
+    @Test
+    public void testAdjacentMines() {
+        final List<Pair<Integer, Integer>> minesList = List.of(new Pair<>(4,4), new Pair<>(5,6));
+        NormalCell cell = new NormalCellImpl(new Pair<>(5,5));
+        assertEquals(minesList, cell.getAdjacentMines(minesList));
+        assertEquals(2, cell.numberOfAdjacentMines(minesList));
     }
 
     @Override

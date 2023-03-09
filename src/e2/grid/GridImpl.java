@@ -2,11 +2,10 @@ package e2.grid;
 
 import e2.Pair;
 import e2.cell.Cell;
-import e2.cell.MineCell;
-import e2.cell.NormalCell;
+import e2.cell.MineCellImpl;
+import e2.cell.NormalCellImpl;
 import e2.cell.type.CellType;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -24,14 +23,14 @@ public class GridImpl implements Grid {
         this.initGrid();
         for(int i = 0; i < minesNumber; i++) {
             Pair<Integer, Integer> position = this.generateRandomPositon();
-            this.grid.replace(position, new MineCell(position));
+            this.grid.replace(position, new MineCellImpl(position));
         }
     }
 
     private void initGrid() {
         for (int i = 0; i < this.gridSize; i++) {
             for (int j = 0; j < this.gridSize; j++) {
-                final Cell cell = new NormalCell(new Pair<Integer, Integer>(i,j));
+                final Cell cell = new NormalCellImpl(new Pair<Integer, Integer>(i,j));
                 this.grid.put(cell.getPosition(), cell);
             }
         }

@@ -1,11 +1,19 @@
 package e2.cell;
 
 import e2.Pair;
-import e2.cell.type.CellType;
 
-public class NormalCell extends CellImpl{
+import java.util.List;
 
-    public NormalCell(Pair<Integer, Integer> position) {
-        super(position, CellType.NORMAL_CELL_TYPE);
+public interface NormalCell extends Cell{
+
+    default List<Pair<Integer,Integer>> getAdjacentMines(List<Pair<Integer, Integer>> mines) {
+        return this.getAdjacentPositions()
+                .stream()
+                .filter(mines::contains)
+                .toList();
+    }
+
+    default int numberOfAdjacentMines(List<Pair<Integer, Integer>> mines) {
+        return this.getAdjacentMines(mines).size();
     }
 }
