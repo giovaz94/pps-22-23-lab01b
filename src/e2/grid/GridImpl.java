@@ -27,6 +27,11 @@ public class GridImpl implements Grid {
         return this.minesList.stream().toList();
     }
 
+    @Override
+    public boolean hasMine(Pair<Integer, Integer> position) {
+        return this.getMines().contains(position);
+    }
+
     private Pair<Integer,Integer> generateRandomPositon() {
         int x = this.random.nextInt(this.gridSize);
         int y = this.random.nextInt(this.gridSize);

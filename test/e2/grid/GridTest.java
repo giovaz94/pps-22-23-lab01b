@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,6 +24,13 @@ class GridTest {
     @Test
     public void testNumberOfMines() {
         assertEquals(DEFAULT_MINES_NUMBER, this.grid.getMines().size());
+    }
+
+    @Test
+    public void testHasMine() {
+        Random random = new Random();
+        Pair<Integer,Integer> randomMine = this.grid.getMines().get(random.nextInt(this.grid.getMines().size()));
+        assertTrue(this.grid.hasMine(randomMine));
     }
 
     @Test
