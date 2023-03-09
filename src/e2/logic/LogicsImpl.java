@@ -22,7 +22,9 @@ public class LogicsImpl implements Logics {
 
     @Override
     public void click(int x, int y) {
-        this.gameStatus = GAME_OVER;
+        if (this.grid.hasMine(new Pair<>(x,y))) {
+            this.gameStatus = GAME_OVER;
+        }
     }
 
     @Override
