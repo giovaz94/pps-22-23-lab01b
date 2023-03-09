@@ -1,14 +1,12 @@
 package e1.actor;
 
 import e1.Pair;
-import e1.config.WorldConfig;
-import e1.config.WorldConfigImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PawnActorImplTest extends AbstractActorTest {
+class PawnActorImplTest extends ActorTest {
 
     public static final int WORLD_SIZE = 5;
     private Actor actor;

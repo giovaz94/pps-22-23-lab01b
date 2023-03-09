@@ -1,10 +1,9 @@
 package e1.actor;
 
-import e1.config.WorldConfig;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-abstract class AbstractActorTest {
+abstract class ActorTest {
 
     abstract public Actor getActor();
 

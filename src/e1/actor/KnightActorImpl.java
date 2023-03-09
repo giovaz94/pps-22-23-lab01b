@@ -1,8 +1,6 @@
 package e1.actor;
 
-import e1.config.WorldConfig;
-
-public class KnightActorImpl extends AbstractActorImpl{
+public class KnightActorImpl extends ActorImpl {
 
     public KnightActorImpl(int x, int y) {
         super(x, y, (currentPosition, nextPosition) -> {
