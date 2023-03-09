@@ -14,4 +14,6 @@ public interface Logics {
     List<Pair<Integer,Integer>> getMines();
 
     boolean isClicked(Pair<Integer, Integer> position);
+
+    int numberOfAdjacentMines(Pair<Integer, Integer> position);
 }

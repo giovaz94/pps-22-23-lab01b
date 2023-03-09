@@ -43,4 +43,9 @@ public class LogicsImpl implements Logics {
     public boolean isClicked(Pair<Integer, Integer> position) {
         return this.grid.isClicked(position);
     }
+
+    @Override
+    public int numberOfAdjacentMines(Pair<Integer, Integer> position) {
+        return this.grid.numberOfAdjacentMines(position);
+    }
 }

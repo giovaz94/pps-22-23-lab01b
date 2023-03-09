@@ -3,6 +3,7 @@ package e2.grid;
 import e2.Pair;
 import e2.cell.Cell;
 import e2.cell.MineCellImpl;
+import e2.cell.NormalCell;
 import e2.cell.NormalCellImpl;
 import e2.cell.type.CellType;
 
@@ -57,6 +58,15 @@ public class GridImpl implements Grid {
     @Override
     public boolean isClicked(Pair<Integer, Integer> position) {
         return this.grid.get(position).isClicked();
+    }
+
+    @Override
+    public int numberOfAdjacentMines(Pair<Integer, Integer> position) {
+        if(this.grid.get(position).getType().equals(CellType.NORMAL_CELL_TYPE)) {
+            NormalCell cell = (NormalCell) this.grid.get(position);
+            return cell.numberOfAdjacentMines(this.getMines());
+        }
+        return 0;
     }
 
     private Pair<Integer,Integer> generateRandomPositon() {

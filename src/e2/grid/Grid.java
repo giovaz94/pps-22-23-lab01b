@@ -12,4 +12,6 @@ public interface Grid {
     boolean hasMine(Pair<Integer, Integer> position);
 
     boolean isClicked(Pair<Integer, Integer> position);
+
+    int numberOfAdjacentMines(Pair<Integer, Integer> position);
 }
