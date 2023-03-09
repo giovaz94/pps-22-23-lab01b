@@ -1,6 +1,6 @@
 package e2.cell;
 
-import e1.Pair;
+import e2.Pair;
 import e2.cell.type.CellType;
 
 public class NormalCell extends CellImpl{

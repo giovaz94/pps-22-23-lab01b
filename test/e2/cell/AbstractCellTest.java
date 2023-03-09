@@ -1,6 +1,6 @@
 package e2.cell;
 
-import e1.Pair;
+import e2.Pair;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
