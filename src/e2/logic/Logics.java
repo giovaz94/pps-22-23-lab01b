@@ -12,4 +12,6 @@ public interface Logics {
     StateEnum getStatus();
 
     List<Pair<Integer,Integer>> getMines();
+
+    boolean isClicked(Pair<Integer, Integer> position);
 }

@@ -34,6 +34,12 @@ class GridTest {
     }
 
     @Test
+    public void testIsClicked() {
+        this.grid.click(new Pair<>(1,1));
+        assertTrue(this.grid.isClicked(new Pair<>(1,1)));
+    }
+
+    @Test
     public void testDifferentMinesPositon() {
         for (Pair<Integer,Integer> mine: this.grid.getMines()) {
             final List<Pair<Integer, Integer>> minesCopy =  new ArrayList<>(this.grid.getMines());

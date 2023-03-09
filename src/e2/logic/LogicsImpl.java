@@ -22,7 +22,9 @@ public class LogicsImpl implements Logics {
 
     @Override
     public void click(int x, int y) {
-        if (this.grid.hasMine(new Pair<>(x,y))) {
+        final Pair<Integer,Integer> clickedPosition = new Pair<>(x,y);
+        this.grid.click(clickedPosition);
+        if (this.grid.hasMine(clickedPosition)) {
             this.gameStatus = GAME_OVER;
         }
     }
@@ -35,5 +37,10 @@ public class LogicsImpl implements Logics {
     @Override
     public List<Pair<Integer, Integer>> getMines() {
         return this.grid.getMines();
+    }
+
+    @Override
+    public boolean isClicked(Pair<Integer, Integer> position) {
+        return this.grid.isClicked(position);
     }
 }

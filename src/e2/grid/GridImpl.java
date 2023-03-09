@@ -38,6 +38,11 @@ public class GridImpl implements Grid {
     }
 
     @Override
+    public void click(Pair<Integer, Integer> position) {
+        this.grid.get(position).click();
+    }
+
+    @Override
     public List<Pair<Integer, Integer>> getMines() {
         return this.grid.values().stream()
                 .filter(cell -> cell.getType().equals(CellType.MINE_CELL_TYPE))
@@ -48,6 +53,11 @@ public class GridImpl implements Grid {
     @Override
     public boolean hasMine(Pair<Integer, Integer> position) {
         return this.getMines().contains(position);
+    }
+
+    @Override
+    public boolean isClicked(Pair<Integer, Integer> position) {
+        return this.grid.get(position).isClicked();
     }
 
     private Pair<Integer,Integer> generateRandomPositon() {
