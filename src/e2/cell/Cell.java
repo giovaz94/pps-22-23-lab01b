@@ -7,9 +7,13 @@ import java.util.List;
 
 public interface Cell {
 
+    void click();
+
     List<Pair<Integer,Integer>> getAdjacentPositions();
 
     Pair<Integer, Integer> getPosition();
 
     CellType getType();
+
+    boolean isClicked();
 }

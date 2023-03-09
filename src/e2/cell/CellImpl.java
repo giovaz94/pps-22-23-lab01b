@@ -12,9 +12,17 @@ public class CellImpl implements Cell {
 
     final CellType cellType;
 
+    boolean click;
+
     public CellImpl(Pair<Integer, Integer> position, CellType type) {
         this.position = position;
         this.cellType = type;
+        this.click = false;
+    }
+
+    @Override
+    public void click() {
+        this.click = true;
     }
 
     @Override
@@ -40,5 +48,10 @@ public class CellImpl implements Cell {
     @Override
     public CellType getType() {
         return this.cellType;
+    }
+
+    @Override
+    public boolean isClicked() {
+        return this.click;
     }
 }

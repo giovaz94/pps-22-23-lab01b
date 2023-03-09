@@ -7,6 +7,8 @@ import static e2.logic.state.StateEnum.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Random;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class LogicsTest {
@@ -28,7 +30,16 @@ class LogicsTest {
 
     @Test
     public void testClick() {
-        this.logicImpl.click(1,1);
+        Random random = new Random();
+        Pair<Integer,Integer> noMinePosition;
+        Pair<Integer,Integer> minePosition = this.logicImpl.getMines().get(0);
+        do {
+            noMinePosition = new Pair<>(random.nextInt(GRID_SIZE), random.nextInt(GRID_SIZE));
+        } while(this.logicImpl.getMines().contains(noMinePosition));
+
+        this.logicImpl.click(noMinePosition.getX(),noMinePosition.getY());
+        assertEquals(IN_GAME, this.logicImpl.getStatus());
+        this.logicImpl.click(minePosition.getX(), minePosition.getY());
         assertEquals(GAME_OVER, this.logicImpl.getStatus());
     }
 }
