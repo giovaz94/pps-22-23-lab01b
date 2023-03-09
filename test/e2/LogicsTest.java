@@ -31,5 +31,4 @@ class LogicsTest {
         this.logicImpl.click(1,1);
         assertEquals(GAME_OVER, this.logicImpl.getStatus());
     }
-
 }

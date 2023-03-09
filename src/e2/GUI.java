@@ -2,6 +2,7 @@ package e2;
 
 import e2.logic.Logics;
 import e2.logic.LogicsImpl;
+import e2.logic.state.StateEnum;
 
 import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
@@ -29,7 +30,8 @@ public class GUI extends JFrame {
         ActionListener onClick = (e)->{
             final JButton bt = (JButton)e.getSource();
             final Pair<Integer,Integer> pos = buttons.get(bt);
-            boolean aMineWasFound = false; // call the logic here to tell it that cell at 'pos' has been seleced
+            this.logics.click(pos.getX(), pos.getY());
+            boolean aMineWasFound = this.logics.getStatus().equals(StateEnum.GAME_OVER); // call the logic here to tell it that cell at 'pos' has been seleced
             if (aMineWasFound) {
                 quitGame();
                 JOptionPane.showMessageDialog(this, "You lost!!");
@@ -75,6 +77,10 @@ public class GUI extends JFrame {
             // call the logic here
             // if this button is a mine, draw it "*"
             // disable the button
+            var coords = entry.getValue();
+            if(this.logics.getMines().contains(coords)) {
+                entry.getKey().setText("*");
+            }
     	}
     }
 
