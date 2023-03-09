@@ -1,4 +1,4 @@
-package e2;
+package e2.logic;
 
 
 import java.util.List;

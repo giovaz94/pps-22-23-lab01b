@@ -1,8 +1,6 @@
-package e2;
+package e2.logic;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import e2.logic.Logics;
 
 public class LogicsImpl implements Logics {
 

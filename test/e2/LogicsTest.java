@@ -1,12 +1,9 @@
 package e2;
 
+import e2.logic.Logics;
+import e2.logic.LogicsImpl;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 class LogicsTest {
 
     public static final int GRID_SIZE = 10;
