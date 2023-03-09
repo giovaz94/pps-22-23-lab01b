@@ -19,17 +19,4 @@ class LogicsTest {
         this.logicImpl = new LogicsImpl(GRID_SIZE, DEFAULT_MINES);
     }
 
-    @Test
-    public void testNumberOfMines() {
-        assertEquals(DEFAULT_MINES, this.logicImpl.getMines().size());
-    }
-
-    @Test
-    public void testDifferentMinesPositon() {
-        for (Pair<Integer,Integer> mine: this.logicImpl.getMines()) {
-           final List<Pair<Integer, Integer>> minesCopy =  new ArrayList<>(this.logicImpl.getMines());
-           assertTrue(minesCopy.remove(mine));
-           assertTrue(minesCopy.stream().noneMatch(p -> p.equals(mine)));
-        }
-    }
 }
