@@ -49,6 +49,9 @@ public class GridImpl implements Grid {
 
     @Override
     public Cell getCell(Pair<Integer, Integer> position) {
+        if(!this.isInGrid(position)) {
+            throw new IndexOutOfBoundsException();
+        }
         return this.grid.get(position);
     }
 

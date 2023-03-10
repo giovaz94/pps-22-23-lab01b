@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -30,6 +31,14 @@ class GridTest {
         assertEquals(DEFAULT_MINES_NUMBER, this.grid.getMines().size());
     }
 
+
+    @Test
+    public void testCantGetOutOfBoundCell() {
+        Pair<Integer, Integer> outOfBoundPosition = new Pair<>(DEFAULT_GRID_SIZE, DEFAULT_GRID_SIZE);
+        assertThrows(IndexOutOfBoundsException.class, () -> this.grid.getCell(outOfBoundPosition));
+    }
+
+
     @Test
     public void testHasMine() {
         Random random = new Random();
@@ -42,10 +51,6 @@ class GridTest {
         Pair<Integer, Integer> noMinePosition = this.getRandomFreePosition();
         this.grid.click(noMinePosition);
         assertTrue(this.grid.isClicked(noMinePosition));
-    }
-
-    private Pair<Integer, Integer> getRandomFreePosition() {
-        return this.getRandomCellByPredicate(cell -> cell.getType().equals(CellType.NORMAL_CELL_TYPE)).getPosition();
     }
 
     @Test
@@ -63,6 +68,10 @@ class GridTest {
         assertTrue(this.grid.placeFlag(cell.getPosition()));
         assertEquals(this.grid.getCell(cell.getPosition()).getType(), CellType.FLAG_CELL_TYPE);
         assertFalse(this.grid.placeFlag(cell.getPosition()));
+    }
+
+    private Pair<Integer, Integer> getRandomFreePosition() {
+        return this.getRandomCellByPredicate(cell -> cell.getType().equals(CellType.NORMAL_CELL_TYPE)).getPosition();
     }
 
     private Cell getRandomCellByPredicate(Predicate<Cell> predicate) {
