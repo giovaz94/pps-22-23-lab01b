@@ -49,7 +49,6 @@ class GridTest {
         return this.getRandomCellByPredicate(cell -> cell.getType().equals(CellType.NORMAL_CELL_TYPE)).getPosition();
     }
 
-
     @Test
     public void testDifferentMinesPositon() {
         for (Pair<Integer,Integer> mine: this.grid.getMines()) {
@@ -57,6 +56,19 @@ class GridTest {
             assertTrue(minesCopy.remove(mine));
             assertTrue(minesCopy.stream().noneMatch(p -> p.equals(mine)));
         }
+    }
+
+    @Test
+    public void testFlagPlacement() {
+        NormalCell cell = (NormalCell) this
+                .getRandomCellByPredicate(c -> c.getType().equals(CellType.NORMAL_CELL_TYPE) && !c.isClicked());
+        assertTrue(this.grid.placeFlag(cell.getPosition()));
+        assertFalse(this.grid.placeFlag(cell.getPosition()));
+    }
+
+    @RepeatedTest(10)
+    public void testCantPlaceFlagOnNotNormalCellType() {
+        Cell cell = this.getRandomCellByPredicate(c -> !c.getType().equals(CellType.NORMAL_CELL_TYPE));
     }
 
     private Cell getRandomCellByPredicate(Predicate<Cell> predicate) {
