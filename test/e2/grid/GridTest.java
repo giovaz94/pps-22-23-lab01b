@@ -16,7 +16,6 @@ import java.util.function.Predicate;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GridTest {
-
     public static final int DEFAULT_GRID_SIZE = 7;
     public static final int DEFAULT_MINES_NUMBER = 5;
     private Grid grid;
@@ -63,6 +62,7 @@ class GridTest {
         NormalCell cell = (NormalCell) this
                 .getRandomCellByPredicate(c -> c.getType().equals(CellType.NORMAL_CELL_TYPE) && !c.isClicked());
         assertTrue(this.grid.placeFlag(cell.getPosition()));
+        assertEquals(this.grid.getCell(cell.getPosition()).getType(), CellType.FLAG_CELL_TYPE);
         assertFalse(this.grid.placeFlag(cell.getPosition()));
     }
 
