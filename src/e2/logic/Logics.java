@@ -15,5 +15,7 @@ public interface Logics {
 
     boolean isClicked(Pair<Integer, Integer> position);
 
+    boolean placeFlag(Pair<Integer, Integer> position);
+
     int numberOfAdjacentMines(Pair<Integer, Integer> position);
 }

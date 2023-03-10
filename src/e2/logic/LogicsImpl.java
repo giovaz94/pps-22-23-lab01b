@@ -45,6 +45,11 @@ public class LogicsImpl implements Logics {
     }
 
     @Override
+    public boolean placeFlag(Pair<Integer, Integer> position) {
+        return this.grid.placeFlag(position);
+    }
+
+    @Override
     public int numberOfAdjacentMines(Pair<Integer, Integer> position) {
         return this.grid.numberOfAdjacentMines(position);
     }

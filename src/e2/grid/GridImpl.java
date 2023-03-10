@@ -81,12 +81,10 @@ public class GridImpl implements Grid {
 
     @Override
     public boolean placeFlag(Pair<Integer, Integer> position) {
-        if(this.grid.get(position).getType().equals(CellType.NORMAL_CELL_TYPE)) {
-            NormalCell cell = (NormalCell) this.grid.get(position);
-            if(!cell.isClicked()) {
-                this.grid.replace(position, new FlagCellImpl(position));
-                return true;
-            }
+        Cell cell = this.getCell(position);
+        if(!cell.isClicked() && !cell.getType().equals(CellType.FLAG_CELL_TYPE)) {
+            this.grid.replace(position, new FlagCellImpl(position));
+            return true;
         }
         return false;
     }

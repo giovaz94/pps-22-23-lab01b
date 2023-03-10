@@ -57,18 +57,12 @@ class GridTest {
         }
     }
 
-    @Test
+    @RepeatedTest(10)
     public void testFlagPlacement() {
-        NormalCell cell = (NormalCell) this
-                .getRandomCellByPredicate(c -> c.getType().equals(CellType.NORMAL_CELL_TYPE) && !c.isClicked());
+        Cell cell = this.getRandomCellByPredicate(c-> !c.isClicked());
         assertTrue(this.grid.placeFlag(cell.getPosition()));
         assertEquals(this.grid.getCell(cell.getPosition()).getType(), CellType.FLAG_CELL_TYPE);
         assertFalse(this.grid.placeFlag(cell.getPosition()));
-    }
-
-    @RepeatedTest(10)
-    public void testCantPlaceFlagOnNotNormalCellType() {
-        Cell cell = this.getRandomCellByPredicate(c -> !c.getType().equals(CellType.NORMAL_CELL_TYPE));
     }
 
     private Cell getRandomCellByPredicate(Predicate<Cell> predicate) {
