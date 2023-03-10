@@ -2,13 +2,11 @@ package e2.grid;
 
 import e2.Pair;
 import e2.cell.Cell;
-import e2.cell.NormalCell;
 import e2.cell.type.CellType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
