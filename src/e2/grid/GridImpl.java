@@ -39,7 +39,15 @@ public class GridImpl implements Grid {
 
     @Override
     public void click(Pair<Integer, Integer> position) {
-        this.grid.get(position).click();
+        if(this.isInGrid(position) && this.grid.get(position).getType().equals(CellType.NORMAL_CELL_TYPE)) {
+            final NormalCell targetCell = (NormalCell) this.grid.get(position);
+            if(!targetCell.isClicked()) {
+                targetCell.click();
+                if(targetCell.numberOfAdjacentMines(this.getMines()) == 0) {
+                    targetCell.getAdjacentPositions().forEach(this::click);
+                }
+            }
+        }
     }
 
     @Override
@@ -74,5 +82,9 @@ public class GridImpl implements Grid {
         int y = this.random.nextInt(this.gridSize);
         Pair<Integer, Integer> position = new Pair<>(x, y);
         return this.getMines().contains(position) ? this.generateRandomPositon() : position;
+    }
+
+    private boolean isInGrid(Pair<Integer, Integer> position) {
+        return this.grid.containsKey(position);
     }
 }

@@ -34,6 +34,12 @@ class NormalCellTest extends AbstractCellTest{
         assertEquals(2, cell.numberOfAdjacentMines(minesList));
     }
 
+    @Test
+    public void testClick() {
+        this.getCell().click();
+        assertTrue(this.getCell().isClicked());
+    }
+
     @Override
     public Cell getCell() {
         return this.cell;

@@ -1,7 +1,10 @@
 package e2.grid;
 
 import e2.Pair;
+import e2.cell.NormalCell;
+import e2.cell.NormalCellImpl;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -33,10 +36,19 @@ class GridTest {
         assertTrue(this.grid.hasMine(randomMine));
     }
 
-    @Test
+    @RepeatedTest(20)
     public void testIsClicked() {
-        this.grid.click(new Pair<>(1,1));
-        assertTrue(this.grid.isClicked(new Pair<>(1,1)));
+        Random random = new Random();
+        NormalCell cell;
+        Pair<Integer,Integer> noMinePosition;
+        do {
+            noMinePosition = new Pair<>(random.nextInt(DEFAULT_GRID_SIZE), random.nextInt(DEFAULT_GRID_SIZE));
+            cell = new NormalCellImpl(noMinePosition);
+        } while(this.grid.getMines().contains(noMinePosition) || cell.numberOfAdjacentMines(this.grid.getMines()) != 0);
+
+
+        this.grid.click(noMinePosition);
+        assertTrue(this.grid.isClicked(noMinePosition));
     }
 
     @Test

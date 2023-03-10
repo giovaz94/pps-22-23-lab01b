@@ -29,11 +29,5 @@ abstract class AbstractCellTest {
         assertEquals(this.getCell().getAdjacentPositions(), adjacentPositions);
     }
 
-    @Test
-    public void testClick() {
-        this.getCell().click();
-        assertTrue(this.getCell().isClicked());
-    }
-
     abstract public Cell getCell();
 }
