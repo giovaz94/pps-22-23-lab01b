@@ -1,10 +1,7 @@
 package e2.grid;
 
 import e2.Pair;
-import e2.cell.Cell;
-import e2.cell.MineCellImpl;
-import e2.cell.NormalCell;
-import e2.cell.NormalCellImpl;
+import e2.cell.*;
 import e2.cell.type.CellType;
 
 import java.util.HashMap;
@@ -51,6 +48,11 @@ public class GridImpl implements Grid {
     }
 
     @Override
+    public Cell getCell(Pair<Integer, Integer> position) {
+        return this.grid.get(position);
+    }
+
+    @Override
     public List<Pair<Integer, Integer>> getMines() {
         return this.grid.values().stream()
                 .filter(cell -> cell.getType().equals(CellType.MINE_CELL_TYPE))
@@ -75,6 +77,18 @@ public class GridImpl implements Grid {
             return cell.numberOfAdjacentMines(this.getMines());
         }
         return 0;
+    }
+
+    @Override
+    public boolean placeFlag(Pair<Integer, Integer> position) {
+        if(this.grid.get(position).getType().equals(CellType.NORMAL_CELL_TYPE)) {
+            NormalCell cell = (NormalCell) this.grid.get(position);
+            if(!cell.isClicked()) {
+                this.grid.replace(position, new FlagCellImpl(position));
+                return true;
+            }
+        }
+        return false;
     }
 
     private Pair<Integer,Integer> generateRandomPositon() {

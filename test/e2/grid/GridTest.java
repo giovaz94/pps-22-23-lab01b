@@ -1,8 +1,9 @@
 package e2.grid;
 
 import e2.Pair;
+import e2.cell.Cell;
 import e2.cell.NormalCell;
-import e2.cell.NormalCellImpl;
+import e2.cell.type.CellType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Predicate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -38,18 +40,15 @@ class GridTest {
 
     @RepeatedTest(20)
     public void testIsClicked() {
-        Random random = new Random();
-        NormalCell cell;
-        Pair<Integer,Integer> noMinePosition;
-        do {
-            noMinePosition = new Pair<>(random.nextInt(DEFAULT_GRID_SIZE), random.nextInt(DEFAULT_GRID_SIZE));
-            cell = new NormalCellImpl(noMinePosition);
-        } while(this.grid.getMines().contains(noMinePosition) || cell.numberOfAdjacentMines(this.grid.getMines()) != 0);
-
-
+        Pair<Integer, Integer> noMinePosition = this.getRandomFreePosition();
         this.grid.click(noMinePosition);
         assertTrue(this.grid.isClicked(noMinePosition));
     }
+
+    private Pair<Integer, Integer> getRandomFreePosition() {
+        return this.getRandomCellByPredicate(cell -> cell.getType().equals(CellType.NORMAL_CELL_TYPE)).getPosition();
+    }
+
 
     @Test
     public void testDifferentMinesPositon() {
@@ -59,4 +58,16 @@ class GridTest {
             assertTrue(minesCopy.stream().noneMatch(p -> p.equals(mine)));
         }
     }
+
+    private Cell getRandomCellByPredicate(Predicate<Cell> predicate) {
+        Random random = new Random();
+        Cell outputCell;
+        do {
+            int x = random.nextInt(DEFAULT_GRID_SIZE);
+            int y = random.nextInt(DEFAULT_GRID_SIZE);
+            outputCell = this.grid.getCell(new Pair<> (x,y));
+        } while (!predicate.test(outputCell));
+        return outputCell;
+    }
+
 }
