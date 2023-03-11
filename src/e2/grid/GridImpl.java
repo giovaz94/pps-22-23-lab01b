@@ -13,13 +13,15 @@ public class GridImpl implements Grid {
     private final HashMap<Pair<Integer, Integer>, Cell> grid= new HashMap<>();
     private final Random random;
     private final int gridSize;
+    private final int minesNumber;
 
 
     public GridImpl(final int gridSize, final int minesNumber) {
         this.gridSize = gridSize;
         this.random = new Random();
+        this.minesNumber = minesNumber;
         this.initGrid();
-        for(int i = 0; i < minesNumber; i++) {
+        for(int i = 0; i < this.minesNumber; i++) {
             Pair<Integer, Integer> position = this.generateRandomPositon();
             this.grid.replace(position, new MineCellImpl(position));
         }
@@ -90,7 +92,7 @@ public class GridImpl implements Grid {
     @Override
     public boolean flag(Pair<Integer, Integer> position) {
         Cell cell = this.getCell(position);
-        if(!cell.isClicked()) {
+        if(!cell.isClicked() && this.checkFlagNumber()) {
             cell.flag();
             return cell.isFlagged();
         }
@@ -111,5 +113,9 @@ public class GridImpl implements Grid {
 
     private boolean isInGrid(Pair<Integer, Integer> position) {
         return this.grid.containsKey(position);
+    }
+
+    private boolean checkFlagNumber() {
+        return this.grid.values().stream().filter(Cell::isFlagged).count() < this.minesNumber;
     }
 }

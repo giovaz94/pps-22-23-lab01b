@@ -69,6 +69,20 @@ class GridTest {
         assertFalse(this.grid.isFLagged(cell.getPosition()));
     }
 
+    @Test
+    public void testCantPlaceMoreFlagsThanMines() {
+        for(int i = 0; i < DEFAULT_MINES_NUMBER; i++) {
+            assertTrue(flagRandom());
+        }
+        assertFalse(flagRandom());
+    }
+
+    private boolean flagRandom() {
+        Cell cell = this.getRandomCellByPredicate(c -> !c.isClicked() || !c.isFlagged());
+        return this.grid.flag(cell.getPosition());
+    }
+
+
     private Pair<Integer, Integer> getRandomFreePosition() {
         return this.getRandomCellByPredicate(cell -> cell.getType().equals(CellType.NORMAL_CELL_TYPE)).getPosition();
     }
