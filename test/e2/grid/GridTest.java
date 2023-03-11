@@ -62,10 +62,11 @@ class GridTest {
 
     @RepeatedTest(10)
     public void testFlagPlacement() {
-        Cell cell = this.getRandomCellByPredicate(c-> !c.isClicked());
-        assertTrue(this.grid.placeFlag(cell.getPosition()));
-        assertEquals(this.grid.getCell(cell.getPosition()).getType(), CellType.FLAG_CELL_TYPE);
-        assertFalse(this.grid.placeFlag(cell.getPosition()));
+        Cell cell = this.getRandomCellByPredicate(c-> true);
+        this.grid.flag(cell.getPosition());
+        assertTrue(this.grid.isFLagged(cell.getPosition()));
+        this.grid.flag(cell.getPosition());
+        assertFalse(this.grid.isFLagged(cell.getPosition()));
     }
 
     private Pair<Integer, Integer> getRandomFreePosition() {
@@ -82,5 +83,4 @@ class GridTest {
         } while (!predicate.test(outputCell));
         return outputCell;
     }
-
 }

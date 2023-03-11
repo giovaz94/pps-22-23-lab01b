@@ -29,5 +29,13 @@ abstract class AbstractCellTest {
         assertEquals(this.getCell().getAdjacentPositions(), adjacentPositions);
     }
 
+    @Test
+    public void testFlagCell() {
+        this.getCell().flag();
+        assertTrue(this.getCell().isFlagged());
+        this.getCell().flag();
+        assertFalse(this.getCell().isFlagged());
+    }
+
     abstract public Cell getCell();
 }

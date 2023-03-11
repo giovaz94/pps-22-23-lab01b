@@ -2,7 +2,6 @@ package e2.grid;
 
 import e2.Pair;
 import e2.cell.Cell;
-import e2.cell.NormalCell;
 
 import java.util.List;
 
@@ -17,7 +16,11 @@ public interface Grid {
 
     boolean isClicked(Pair<Integer, Integer> position);
 
+    boolean isFLagged(Pair<Integer, Integer> position);
+
     int numberOfAdjacentMines(Pair<Integer, Integer> position);
 
-    boolean placeFlag(Pair<Integer, Integer> position);
+    boolean flag(Pair<Integer, Integer> position);
+
+    int getSize();
 }

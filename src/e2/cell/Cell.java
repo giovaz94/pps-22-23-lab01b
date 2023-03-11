@@ -9,6 +9,8 @@ public interface Cell {
 
     void click();
 
+    void flag();
+
     List<Pair<Integer,Integer>> getAdjacentPositions();
 
     Pair<Integer, Integer> getPosition();
@@ -16,4 +18,6 @@ public interface Cell {
     CellType getType();
 
     boolean isClicked();
+
+    boolean isFlagged();
 }

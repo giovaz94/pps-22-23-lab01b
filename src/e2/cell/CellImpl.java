@@ -14,15 +14,23 @@ public class CellImpl implements Cell {
 
     boolean click;
 
+    boolean isFlagged;
+
     public CellImpl(Pair<Integer, Integer> position, CellType type) {
         this.position = position;
         this.cellType = type;
         this.click = false;
+        this.isFlagged = false;
     }
 
     @Override
     public void click() {
         this.click = true;
+    }
+
+    @Override
+    public void flag() {
+        this.isFlagged = !this.isFlagged();
     }
 
     @Override
@@ -53,5 +61,10 @@ public class CellImpl implements Cell {
     @Override
     public boolean isClicked() {
         return this.click;
+    }
+
+    @Override
+    public boolean isFlagged() {
+        return this.isFlagged;
     }
 }

@@ -31,18 +31,16 @@ public class GUI extends JFrame {
             final JButton bt = (JButton)e.getSource();
             final Pair<Integer,Integer> pos = buttons.get(bt);
             this.logics.click(pos.getX(), pos.getY());
-            boolean aMineWasFound = this.logics.getStatus().equals(StateEnum.GAME_OVER); // call the logic here to tell it that cell at 'pos' has been seleced
+            StateEnum gameStatus = this.logics.getStatus();
+            boolean aMineWasFound = gameStatus.equals(StateEnum.GAME_OVER); // call the logic here to tell it that cell at 'pos' has been seleced
             if (aMineWasFound) {
-                quitGame();
-                JOptionPane.showMessageDialog(this, "You lost!!");
+                quitAndShowMessage("You lost!");
             } else {
                 drawBoard();            	
             }
-            boolean isThereVictory = false; // call the logic here to ask if there is victory
+            boolean isThereVictory = gameStatus.equals(StateEnum.WIN); // call the logic here to ask if there is victory
             if (isThereVictory){
-                quitGame();
-                JOptionPane.showMessageDialog(this, "You won!!");
-                System.exit(0);
+                quitAndShowMessage("You won!");
             }
         };
 
@@ -52,9 +50,13 @@ public class GUI extends JFrame {
                 final JButton bt = (JButton)e.getSource();
                 if (bt.isEnabled()){
                     final Pair<Integer,Integer> pos = buttons.get(bt);
-                    // call the logic here to put/remove a flag
                     if(logics.placeFlag(pos)) {
                         bt.setText("F");
+                    } else {
+                        bt.setText("");
+                    }
+                    if(logics.getStatus().equals(StateEnum.WIN)) {
+                        quitAndShowMessage("You won!");
                     }
                 }
                 drawBoard(); 
@@ -73,7 +75,13 @@ public class GUI extends JFrame {
         this.drawBoard();
         this.setVisible(true);
     }
-    
+
+    private void quitAndShowMessage(String message) {
+        quitGame();
+        JOptionPane.showMessageDialog(this, message);
+        System.exit(0);
+    }
+
     private void quitGame() {
         this.drawBoard();
     	for (var entry: this.buttons.entrySet()) {
@@ -83,6 +91,7 @@ public class GUI extends JFrame {
             var coords = entry.getValue();
             if(this.logics.getMines().contains(coords)) {
                 entry.getKey().setText("*");
+                entry.getKey().setEnabled(false);
             }
     	}
     }

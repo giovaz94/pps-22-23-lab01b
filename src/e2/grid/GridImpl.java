@@ -74,6 +74,11 @@ public class GridImpl implements Grid {
     }
 
     @Override
+    public boolean isFLagged(Pair<Integer, Integer> position) {
+        return this.getCell(position).isFlagged();
+    }
+
+    @Override
     public int numberOfAdjacentMines(Pair<Integer, Integer> position) {
         if(this.grid.get(position).getType().equals(CellType.NORMAL_CELL_TYPE)) {
             NormalCell cell = (NormalCell) this.grid.get(position);
@@ -83,13 +88,18 @@ public class GridImpl implements Grid {
     }
 
     @Override
-    public boolean placeFlag(Pair<Integer, Integer> position) {
+    public boolean flag(Pair<Integer, Integer> position) {
         Cell cell = this.getCell(position);
-        if(!cell.isClicked() && !cell.getType().equals(CellType.FLAG_CELL_TYPE)) {
-            this.grid.replace(position, new FlagCellImpl(position));
-            return true;
+        if(!cell.isClicked()) {
+            cell.flag();
+            return cell.isFlagged();
         }
         return false;
+    }
+
+    @Override
+    public int getSize() {
+        return this.gridSize;
     }
 
     private Pair<Integer,Integer> generateRandomPositon() {

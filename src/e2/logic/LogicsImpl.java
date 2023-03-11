@@ -1,6 +1,7 @@
 package e2.logic;
 
 import e2.Pair;
+import e2.cell.Cell;
 import e2.grid.Grid;
 import e2.grid.GridImpl;
 import e2.logic.state.StateEnum;
@@ -13,11 +14,12 @@ public class LogicsImpl implements Logics {
 
     private StateEnum gameStatus;
 
-    private Grid grid;
+    private final Grid grid;
 
     public LogicsImpl(int size, int minesNumber) {
         this.gameStatus = IN_GAME;
         this.grid = new GridImpl(size, minesNumber);
+        System.out.println(this.grid.getMines());
     }
 
     @Override
@@ -27,6 +29,7 @@ public class LogicsImpl implements Logics {
         if (this.grid.hasMine(clickedPosition)) {
             this.gameStatus = GAME_OVER;
         }
+        this.checkVictory();
     }
 
     @Override
@@ -46,11 +49,37 @@ public class LogicsImpl implements Logics {
 
     @Override
     public boolean placeFlag(Pair<Integer, Integer> position) {
-        return this.grid.placeFlag(position);
+        boolean flagPlaced = this.grid.flag(position);
+        this.checkVictory();
+        System.out.println(this.getStatus());
+        return flagPlaced;
     }
 
     @Override
     public int numberOfAdjacentMines(Pair<Integer, Integer> position) {
         return this.grid.numberOfAdjacentMines(position);
+    }
+
+    private void checkVictory() {
+        if(this.getStatus().equals(GAME_OVER)) {
+            return;
+        }
+
+        boolean areAllFlagged = this.grid.getMines().stream()
+                .map(this.grid::getCell)
+                .allMatch(Cell::isFlagged);
+
+        boolean areAllClicked = true;
+        List<Pair<Integer, Integer>> minesPosition = this.grid.getMines();
+        for (int i = 0; i < this.grid.getSize(); i++) {
+            for (int j = 0; j < this.grid.getSize(); j++) {
+                Pair<Integer, Integer> position = new Pair<>(i, j);
+                if(!this.isClicked(position) && !minesPosition.contains(position)) {
+                    areAllClicked = false;
+                }
+            }
+        }
+
+        this.gameStatus = (areAllClicked || areAllFlagged) ? WIN : IN_GAME;
     }
 }
